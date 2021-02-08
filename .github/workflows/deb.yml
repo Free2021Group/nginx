@@ -6,9 +6,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Build Debian package
+      uses: actions/checkout@v2
       uses: dawidd6/action-debian-package@v1
       with:
-        source_directory: ../ # optional, relative to workspace directory
+        source_directory: ./ # optional, relative to workspace directory
         artifacts_directory: to_upload # optional, relative to workspace directory
     - name: Upload ftp
       uses: sebastianpopp/ftp-action@releases/v2
