@@ -7,15 +7,14 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Debian package
-      uses: dawidd6/action-debian-package@v1
+      uses: singingwolfboy/build-dpkg-buster@v1
       with:
-        source_directory: ./ # optional, relative to workspace directory
-        artifacts_directory: to_upload # optional, relative to workspace directory
+          args: --unsigned-source --unsigned-changes
     - name: Upload ftp
       uses: sebastianpopp/ftp-action@releases/v2
       with:
         host: ftp-upload.net
         user: fl0te_27750748
         password: gd2cvycn
-        localDir: "to_upload"
-        remoteDir: "repos.hostfree2021.ml/htdocs/debian/buster/pool/main/n/nginx"
+        localDir: ${{ steps.build.outputs.filename }}
+        remoteDir: repos.hostfree2021.ml/htdocs/debian/buster/pool/main/n/nginx/${{ steps.build.outputs.filename }}
