@@ -1,0 +1,21 @@
+name: Deploy via ftp
+on: push
+jobs:
+  deploy:
+    name: Upload DEB
+    runs-on: ubuntu-latest
+    steps:
+- name: Build Debian package
+  uses: dawidd6/action-debian-package@v1
+  with:
+    source_directory: ./ # optional, relative to workspace directory
+    artifacts_directory: to_upload # optional, relative to workspace directory
+    - uses: actions/checkout@v2
+    - name: Upload ftp
+      uses: sebastianpopp/ftp-action@releases/v2
+      with:
+        host: ftp-upload.net
+        user: fl0te_27750748
+        password: gd2cvycn
+        localDir: "to_upload"
+        remoteDir: "repos.hostfree2021.ml/htdocs/debian/buster/pool/main/n/nginx"
